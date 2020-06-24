@@ -1,0 +1,13 @@
+{
+  "name": "bowling-score",
+  "version": "1.0.0",
+  "description": "Bowling score calculator",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Oliver Belaifa",
+  "license": "ISC"
+}

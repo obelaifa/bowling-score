@@ -15,7 +15,7 @@ git clone https://github.com/obelaifa/bowling-score.git
 
 ## Start
 
-To start you have to enter in the shell:
+To run it you have to type in the shell:
 
 ```bash
 npm run start

@@ -13,7 +13,6 @@ const Frame = require('./Frame');
 class Game {
   #frames = [new Frame()];
   #frameIndex = 0;
-  #bonusFrameIndex = 0;
   #maxFrameIndex;
 
   constructor(maxFrameCount = 10) {
@@ -25,18 +24,15 @@ class Game {
   }
 
   done() {
-    return this.#frameIndex == this.#maxFrameIndex && this.#frames[this.#maxFrameIndex].done();
+    return this.#frameIndex === this.#maxFrameIndex && this.#frames[this.#maxFrameIndex].done();
   }
 
   knockDownPins(pinCount) {
     // add bonus to the relevant frames
-    for (let i = this.#bonusFrameIndex; i <= this.#frameIndex; ++i) {
+    for (let i = 0; i <= this.#frameIndex; ++i) {
       if (!this.#frames[i].bonusDone()) {
         this.#frames[i].addBonus(pinCount);
-        if (this.#frames[i].bonusDone()) {
-          ++this.#bonusFrameIndex;
-        }
-      }
+      } 
     }
 
     // knock down pins in the current frame
@@ -44,10 +40,7 @@ class Game {
     // if the frame is closed and if it's not the last frame then add a new frame
     if (this.#frames[this.#frameIndex].rollsDone() && this.#frameIndex < this.#maxFrameIndex) {
       ++this.#frameIndex;
-      this.#frames.push(new Frame(this.#frameIndex == this.#maxFrameIndex));
-      if (this.#frames[this.#bonusFrameIndex].bonusDone()) {
-        ++this.#bonusFrameIndex;
-      }
+      this.#frames.push(new Frame(this.#frameIndex === this.#maxFrameIndex));
     }
   }
   
@@ -62,7 +55,7 @@ class Game {
 
       if (i !== this.#maxFrameIndex) {
         if (knockedDownPins[1] !== undefined) {
-          obj.rolls.push(knockedDownPins[0] + knockedDownPins[1] == 10 ? '/' : knockedDownPins[1]);
+          obj.rolls.push(knockedDownPins[0] + knockedDownPins[1] === 10 ? '/' : knockedDownPins[1]);
         }
       } else {
         for (let j = 1; j <= 2; ++j) {
@@ -70,10 +63,10 @@ class Game {
             if (knockedDownPins[j] === 10) {
               obj.rolls.push('X');
             } else {
-              if (knockedDownPins[j - 1] === 10) {
+              if (knockedDownPins[j - 1] === 10 || (j === 2 && knockedDownPins[j - 2] + knockedDownPins[j - 1] === 10)) {
                 obj.rolls.push(knockedDownPins[j]);
               } else {
-                obj.rolls.push(knockedDownPins[j - 1] + knockedDownPins[j] == 10 ? '/' : knockedDownPins[j]);
+                obj.rolls.push(knockedDownPins[j - 1] + knockedDownPins[j] === 10 ? '/' : knockedDownPins[j]);
               }
             }
           }

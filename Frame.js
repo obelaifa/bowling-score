@@ -33,11 +33,11 @@ class Frame {
   }
 
   rollsDone() {
-    return this.#rolls == 0;
+    return this.#rolls === 0;
   }
 
   bonusDone() {
-    return this.#bonus == 0;
+    return this.#bonus === 0;
   }
 
   done() {
@@ -52,14 +52,14 @@ class Frame {
 
     if (this.#lastFrame) {
       // special handling of the last frame
-      if (this.#pins == 0 && this.#knockedDownPins.length < 3) {
+      if (this.#pins === 0 && this.#knockedDownPins.length < 3) {
         this.#pins = 10;
-        if (this.#rolls + this.#knockedDownPins.length == 2) {
+        if (this.#rolls + this.#knockedDownPins.length === 2) {
           ++this.#rolls;
         }
       }
     } else {
-      if (this.#pins == 0) {
+      if (this.#pins === 0) {
         // in case of a strike bonus rolls is set to 2
         // in case of a spare bonus rolls is set to 1
         this.#bonus = this.#rolls + 1;
